@@ -44,7 +44,7 @@ class ScriptFund{
             }else{
                 console.log('采集结束');
             }
-        },100);
+        },10);
     /*    data.map((item,index)=>{
             let fundCode = item[0];
             let url = `http://fundgz.1234567.com.cn/js/${fundCode}.js?rt=1463558676006`;
