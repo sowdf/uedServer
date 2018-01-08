@@ -13,7 +13,6 @@ const jsonpgz = (data)=>{
     }else{
         proxyData.isProfit = 0;
     }
-    console.log(proxyData);
     Fund.create(proxyData);
     return true;
 }
