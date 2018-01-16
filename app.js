@@ -80,9 +80,11 @@ app.use(async (req,res,next)=>{
 let main = require('./routers/index');
 let admin = require('./routers/admin');
 let user = require('./routers/user');
+let scheduling = require('./routers/scheduling');
 app.use('/',main);
 app.use('/admin',admin);
 app.use('/admin',user);
+app.use('/admin/scheduling',scheduling);
 app.listen('1818',(err)=>{
     if(err){
         throw err;

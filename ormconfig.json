@@ -1,9 +1,9 @@
 {
   "dialect": "mysql",
-  "host": "localhost",
+  "host": "120.24.169.84",
   "port": 3306,
   "username": "root",
-  "password": "a2153218",
+  "password": "Czhui.92595",
   "database": "ued",
   "pool" : {
     "max" : 5,
