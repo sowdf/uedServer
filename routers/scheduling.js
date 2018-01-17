@@ -25,7 +25,7 @@ router.post('/member/add',async (req,res,next)=>{
         position,
         email
     })
-
+    return res.send(res.stackResponse(100, '添加成功', {}));
 });
 
 /**
