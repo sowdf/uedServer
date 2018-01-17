@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const SchedulingUser = require('../model/SchedulingUser');
 
+
 /*
  * 人员添加
  *
@@ -27,6 +28,15 @@ router.post('/member/add',async (req,res,next)=>{
 
 });
 
+/**
+ * 所有人员
+ *
+ */
+router.get('/member/all',async (req,res,next)=>{
+    console.log(11111);
+    let members = await SchedulingUser.findAll({});
+    return res.send(res.stackResponse(100, 'success', members));
+});
 /**
  * 获取单个人员信息
  * @param mid
@@ -78,6 +88,12 @@ router.post('/member/edit',async (req,res,next)=>{
     });
     return res.send(res.stackResponse(100, 'success', {}));
 });
+
+
+/*
+* 活动入录
+* */
+
 
 
 module.exports = router;
