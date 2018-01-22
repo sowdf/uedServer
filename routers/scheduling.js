@@ -81,11 +81,11 @@ router.post('/member/edit',async (req,res,next)=>{
 
     let updateData = JSON.parse(JSON.stringify(req.body));
     delete updateData.mid;
-    SchedulingUser.update({ //更新userInfo
+    SchedulingUser.update(updateData,{ //更新userInfo
         where : {
             mid : mid
         }
-    },updateData);
+    });
     return res.send(res.stackResponse(100, 'success', {}));
 });
 
@@ -122,9 +122,12 @@ router.post('/active/edit',async (req,res,next)=>{
     let updateData = JSON.stringify(JSON.stringify(req.body));
     delete updateData.actId;
     Active.update(
+        updateData,
         {
-            actId
-        },updateData);
+            where : {
+                actId
+            }
+        });
     return res.send(res.stackResponse(100, '编辑成功', {}));
 });
 
