@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const SchedulingUser = require('../model/SchedulingUser');
+const Working = require('../model/Working');
+const Position = require('../model/Position');
+const Active = require('../model/Active');
 
 
 /*
@@ -8,23 +11,20 @@ const SchedulingUser = require('../model/SchedulingUser');
  *
  * */
 router.post('/member/add',async (req,res,next)=>{
-    let {body:{position,name,email}} = req;
-    if(!name){
+    let {body:{position,name,email,workNumber}} = req;
+    if(!name || !workNumber){
         return res.send(res.stackResponse(99, '参数不足', {}));
     }
     let users = await SchedulingUser.findAll({
         where : {
-            name
+            workNumber
         }
     });
     if(users.length > 0 ){
         return res.send(res.stackResponse(98, '该人员已存在~~', {}));
     }
-    SchedulingUser.create({
-        name,
-        position,
-        email
-    })
+    let createData = JSON.parse(JSON.stringify(req.body));
+    SchedulingUser.create(createData);
     return res.send(res.stackResponse(100, '添加成功', {}));
 });
 
@@ -93,6 +93,70 @@ router.post('/member/edit',async (req,res,next)=>{
 /*
 * 活动入录
 * */
+router.post('/active/add',async (req,res,next)=>{
+    let {name} = req;
+    if(!name){
+        return res.send(res.stackResponse(99, '参数不足', {}));
+    }
+    let createData = JSON.stringify(JSON.stringify(req.body));
+    Active.create(createData);
+    return res.send(res.stackResponse(100, '添加成功', {}));
+})
+
+/*
+* 编辑
+* */
+router.post('/active/edit',async (req,res,next)=>{
+    let {actId} = req;
+    if(!actId){
+        return res.send(res.stackResponse(99, '参数不足', {}));
+    }
+    let actives = await Active.findAll({
+        where : {
+            actId
+        }
+    });
+    if(actives.length === 0){
+        return res.send(res.stackResponse(99, '活动不存在~~', {}));
+    }
+    let updateData = JSON.stringify(JSON.stringify(req.body));
+    delete updateData.actId;
+    Active.update(
+        {
+            actId
+        },updateData);
+    return res.send(res.stackResponse(100, '编辑成功', {}));
+});
+
+
+/*
+* 获取单个活动信息
+* */
+router.get('/active/findOne',async (req,res,next)=>{
+    let {actId} = req;
+    if(!actId){
+        return res.send(res.stackResponse(99, '参数不足', {}));
+    }
+    let actives = await Active.findAll({
+        where : {
+            actId
+        }
+    });
+    if(actives.length === 0){
+        return res.send(res.stackResponse(99, '活动不存在~~', {}));
+    }
+    return res.send(res.stackResponse(100, '查询成功~~', actives[0]));
+});
+
+
+/*
+* 所有活动信息
+* */
+router.get('/active/all',async (req,res,next)=>{
+    let actives = await Active.findAll({});
+    return res.send(res.stackResponse(100, '查询成功~~', actives[0]));
+});
+
 
 
 
